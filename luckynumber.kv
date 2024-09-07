@@ -1,0 +1,94 @@
+#:kivy 2.0.0
+
+<Diamond>:
+    canvas:
+        Color:
+            rgba: self.color
+        Line:
+            points: self.get_points()
+            close: True
+            width: 2
+
+<NumberSlot>:
+    orientation: 'vertical'
+    Button:
+        text: 'Stop'
+        on_press: root.stop_rotation()
+        disabled: not root.is_rotating
+    Label:
+        text: root.number_text
+        font_size: '24sp'
+
+<GameScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        
+        BoxLayout:
+            id: diamonds_layout
+            size_hint_y: 0.2
+        
+        BoxLayout:
+            id: slots_layout
+            orientation: 'horizontal'
+            spacing: 10
+        
+        Button:
+            text: 'STOP ALL SLOTS'
+            size_hint_y: 0.15
+            on_press: root.stop_all()
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.15
+            spacing: 10
+            Button:
+                text: 'Start Rotating'
+                on_press: root.start_rotating()
+            Button:
+                text: 'Change Theme'
+                on_press: root.open_theme_screen()
+
+<SetupScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+        Label:
+            text: 'Lucky Number Generator Setup'
+            font_size: '24sp'
+        TextInput:
+            id: num_numbers
+            hint_text: 'Number of slots'
+            input_filter: 'int'
+            multiline: False
+        TextInput:
+            id: max_size
+            hint_text: 'Max number'
+            input_filter: 'int'
+            multiline: False
+        Button:
+            text: 'Start Game'
+            on_press: root.start_game()
+
+<ThemeScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+        Label:
+            text: 'Select a Theme'
+            font_size: '24sp'
+        Button:
+            text: 'Default'
+            on_press: root.set_theme('Default')
+        Button:
+            text: 'Dark'
+            on_press: root.set_theme('Dark')
+        Button:
+            text: 'High Contrast'
+            on_press: root.set_theme('High Contrast')
+        Button:
+            text: 'Back to Game'
+            on_press: root.manager.current = 'game'
